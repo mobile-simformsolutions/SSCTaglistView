@@ -52,7 +52,6 @@ class ViewController: UIViewController {
         
         
         self.tagListView.textFont = UIFont.systemFont(ofSize: 15.0, weight: .heavy)
-        
     }
 
     @IBAction func copySelectedAction(_ sender: UIButton) {
@@ -68,13 +67,11 @@ class ViewController: UIViewController {
     }
     @IBAction func addTagAction(_ sender: UIButton) {
         let strText = self.txtTag.text?.trimmingCharacters(in: .whitespaces)
-        if(strText?.characters.count != 0){
+        if(strText?.count != 0){
             self.tagListView.appendTag(tagName: strText!)
             self.aryTeglist.append(strText!)
             self.txtTag.text = ""
         }
-        
-        
     }
     
 }

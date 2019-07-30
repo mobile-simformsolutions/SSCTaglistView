@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = 'SSCTaglistView'
 
-  s.version          = '0.1.12'
+  s.version          = '1.0'
 
   s.summary          = 'Simple but highly customizable iOS tag list view, in Swift.'
 
@@ -14,6 +14,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/sanjaysinh-Chauhan/SSCTaglistView.git', :tag => s.version.to_s }
  
   s.ios.deployment_target = '10.0'
+  s.swift_version = '5.0'
   s.source_files = 'TaglistCollectionDemo/TaglistCollectionDemo/Classes/**/*'
 
 end

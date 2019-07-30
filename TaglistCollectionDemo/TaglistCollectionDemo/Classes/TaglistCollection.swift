@@ -232,7 +232,7 @@ protocol TagViewDelegate: class {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = self.tagSpacing
         layout.minimumInteritemSpacing = self.tagSpacing
-        layout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.scrollDirection = .horizontal
         
         // 3 - set collectionview layout
@@ -243,7 +243,7 @@ protocol TagViewDelegate: class {
         
         // 4 - register nib
         let tagCollectionNib = UINib(nibName: String(describing: TagCollectionCell.self), bundle: nil)
-        collectionView!.register(tagCollectionNib, forCellWithReuseIdentifier: "Cell")
+        collectionView.register(tagCollectionNib, forCellWithReuseIdentifier: "Cell")
         
         // 5 - set datasource delegate and colors
         collectionView.backgroundColor = UIColor.red
@@ -255,13 +255,12 @@ protocol TagViewDelegate: class {
         self.addSubview(collectionView)
         
         // 7 - add constraint
+        guard let collectionView = self.collectionView else { return }
         let topConstrain = NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: collectionView, attribute: .top, multiplier: 1, constant: 0)
         let leftConstrain = NSLayoutConstraint(item: self, attribute: .leading, relatedBy: .equal, toItem: collectionView, attribute: .leading, multiplier: 1, constant: 0)
         let rightConstrain = NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: .equal, toItem: collectionView, attribute: .trailing, multiplier: 1, constant: 0)
         let heightConstraint = NSLayoutConstraint(item: collectionView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 50.0)
         self.addConstraints([topConstrain, heightConstraint, leftConstrain,rightConstrain])
-        
-        
     }
     
     /// Append multiple tags
@@ -272,7 +271,7 @@ protocol TagViewDelegate: class {
             self.tagNames.append(tag)
             self.selectedTagAck.append(false)
         }
-        self.collectionView.reloadData()
+        self.collectionView.reloadCollectionData()
         //self.collectionView.collectionViewLayout.invalidateLayout()
     }
     
@@ -282,7 +281,7 @@ protocol TagViewDelegate: class {
     func appendTag (tagName : String) {
         self.tagNames.append(tagName)
         self.selectedTagAck.append(false)
-        self.collectionView.reloadData()
+        self.collectionView.reloadCollectionData()
         //self.collectionView.collectionViewLayout.invalidateLayout()
     }
     
@@ -294,7 +293,7 @@ protocol TagViewDelegate: class {
     func appendTag (tagName : String ,atIndex : Int) {
         self.tagNames.insert(tagName, at: atIndex)
         self.selectedTagAck.insert(false, at: atIndex)
-        self.collectionView.reloadData()
+        self.collectionView.reloadCollectionData()
     }
     
     /// Remove all tags
@@ -304,9 +303,7 @@ protocol TagViewDelegate: class {
         self.selectedTagAck.removeAll()
         self.collectionView.collectionViewLayout.invalidateLayout()
         self.collectionView.layoutIfNeeded()
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
+        self.collectionView.reloadCollectionData()
     }
     
     /// Remove tag at specific index
@@ -322,10 +319,7 @@ protocol TagViewDelegate: class {
         }
         self.collectionView.collectionViewLayout.invalidateLayout()
         self.collectionView.layoutIfNeeded()
-        
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
+        self.collectionView.reloadCollectionData()
     }
     
     
@@ -417,7 +411,7 @@ extension TaglistCollection : UICollectionViewDataSource ,UICollectionViewDelega
                 }
             }
         }
-        self.collectionView.reloadData()
+        self.collectionView.reloadCollectionData()
     }
 }
 
